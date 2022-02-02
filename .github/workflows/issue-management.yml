@@ -6,7 +6,7 @@ name: Issue Management
 on:
   push:
     paths: 
-    - 'workflows/issue-management.yml'
+    - '/.github/workflows/issue-management.yml'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
