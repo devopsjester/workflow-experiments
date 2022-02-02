@@ -43,6 +43,5 @@ jobs:
       with: 
         route: POST /projects/columns/{column_id}/cards
         column_id: 17664234
-        note: Cart TBD
         content_id: ${{ fromJson(steps.create-issue.outputs.data).id }}
         content_type: Issue
