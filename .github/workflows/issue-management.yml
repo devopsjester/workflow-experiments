@@ -34,14 +34,14 @@ jobs:
       id: issue-data
       run: | 
         echo "Issue ID: ${{ fromJson(steps.create-issue.outputs.data).id }}"
-#     - name: Add card to project
-#       id: create-card
-#       uses: octokit/request-action@v2.1.0
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         COLUMN_ID: 17664234
-#       with: 
-#         route: POST /projects/columns/{column_id}/cards
-#         column_id: $COLUMN_ID
-#         note: Cart TBD
-#         content_id: ${{ fromJson(steps.create-issue.outputs.data).id }}
+    - name: Add card to project
+      id: create-card
+      uses: octokit/request-action@v2.1.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COLUMN_ID: 17664234
+      with: 
+        route: POST /projects/columns/{column_id}/cards
+        column_id: $COLUMN_ID
+        note: Cart TBD
+        content_id: ${{ fromJson(steps.create-issue.outputs.data).id }}
