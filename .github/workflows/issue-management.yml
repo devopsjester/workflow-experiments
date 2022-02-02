@@ -14,12 +14,13 @@ jobs:
   create-issue-in-project:
     runs-on: ubuntu-latest
     steps: 
-    - name: GitHub API Request
+    - name: Create issue
+      id: create-issue
       # You may pin to the exact commit or the version.
       # uses: octokit/request-action@7e93b91076fad3920c29d44eb2a6311d929db3dd
       uses: octokit/request-action@v2.1.0
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         # HTTP Verb + path as shown on https://developer.github.com/v3/
         route: POST /repos/{owner}/{repo}/issues
@@ -29,4 +30,18 @@ jobs:
         # mediaType: # optional, default is {}
         title: Issue Title
         body: TBD
-        
+    - name: Get issue data
+      id: issue-data
+      run: | 
+        echo "Issue ID: ${{ fromJson(steps.create-issue.outputs.data).id }}"
+#     - name: Add card to project
+#       id: create-card
+#       uses: octokit/request-action@v2.1.0
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         COLUMN_ID: 17664234
+#       with: 
+#         route: POST /projects/columns/{column_id}/cards
+#         column_id: $COLUMN_ID
+#         note: Cart TBD
+#         content_id: ${{ fromJson(steps.create-issue.outputs.data).id }}
