@@ -20,6 +20,7 @@ jobs:
         route: POST /repos/{owner}/{repo}/issues
         owner: devopsjester
         repo: workflow-experiments
+        head_sha: ${{ github.sha }}
         # Custom media type in the Accept header
         # mediaType: # optional, default is {}
         title: Issue Title
