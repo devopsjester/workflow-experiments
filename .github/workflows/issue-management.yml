@@ -4,10 +4,6 @@ name: Issue Management
 
 # Controls when the workflow will run
 on:
-  push:
-    paths: 
-    - '/.github/workflows/issue-management.yml'
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -42,6 +38,6 @@ jobs:
         COLUMN_ID: 17664234
       with: 
         route: POST /projects/columns/{column_id}/cards
-        column_id: 17664234
+        column_id: ${{ env.COLUMN_ID }}
         content_id: ${{ fromJson(steps.create-issue.outputs.data).id }}
         content_type: Issue
