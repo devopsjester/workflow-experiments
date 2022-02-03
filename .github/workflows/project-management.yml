@@ -21,21 +21,6 @@ jobs:
             repository(owner:"devopsjester", name:"workflow-experiments") {
               id
             }
-          }
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: show token
-      run: |
-        echo "GitHub Token: ${{ secrets.GITHUB_TOKEN }}"
-        echo "Graph Token: ${{ secrets.GRAPH_TOKEN }}"
-    
-    - name: Get project id
-      uses: octokit/graphql-action@v2.x
-      id: get-project
-      with:
-        query: |
-          query GetProjectNodeId{
             user(login:"devopsjester") {
               projectNext(number:3) {
                 id
@@ -44,21 +29,14 @@ jobs:
           }
       env:
         GITHUB_TOKEN: ${{ secrets.GRAPH_TOKEN }}
-        
-    - name: show repo data
-      run: |
-        echo "data: ${{ fromJson(steps.get-repo.outputs.data) }}"
-        echo "Repo node Id: ${{ fromJson(steps.get-repo.outputs.data).repository.id }}"
-        echo "Project: ${{ fromJson(steps.get-project.outputs.data).user.projectNext }}"
-        echo "Project node Id: ${{ fromJson(steps.get-project.outputs.data).user.projectNext.id }}"
 
-    - name: Create issue in project (beta)
+    - name: Create issue
       uses: octokit/graphql-action@v2.x
-      id: create-work-item
+      id: create-issue
       with:
         query: |
-          mutation CreateIssueInProject{
-            createIssue(input: { body: "TBD", projectIds: ["${{ fromJson(steps.get-project.outputs.data).user.projectNext.id }}"], title:"some title", repositoryId: "${{ fromJson(steps.get-repo.outputs.data).repository.id }}" }) {
+          mutation CreateIssue{
+            createIssue(input: { body: "TBD", projectIds: [], title:"some title", repositoryId: "${{ fromJson(steps.get-repo.outputs.data).repository.id }}" }) {
               issue {
                 id
               }
@@ -66,7 +44,22 @@ jobs:
           }
       env:
         GITHUB_TOKEN: ${{ secrets.GRAPH_TOKEN }}
-
+        
+    - name: Create issue
+      uses: octokit/graphql-action@v2.x
+      id: add-project-item
+      with:
+        query: |
+          mutation addIssueToProject {
+            addProjectNextItem(input:{projectId:"${{ fromJson(steps.get-repo.outputs.data).user.projectNext.id }}", contentId: "${{ fromJson(steps.create-issue.outputs.data).issue.id }}"}) {
+              projectNextItem {
+                id
+                title
+              }
+            }
+          }
+      env:
+        GITHUB_TOKEN: ${{ secrets.GRAPH_TOKEN }}
     - name: display created issue id
-      run: echo "Create issue #${{ fromJson(steps.create-work-item.outputs.data).issue.id }}"
+      run: echo "Create issue #${{ fromJson(steps.add-project-item.outputs.data).issue.id }}: ${{ fromJson(steps.add-project-item.outputs.data).issue.name }}"
       
