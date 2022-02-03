@@ -61,6 +61,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GRAPH_TOKEN }}
     - name: display created issue id
-      run: echo "Create issue #${{ fromJson(steps.add-project-item.outputs.data).issue.id }}: ${{ fromJson(steps.add-project-item.outputs.data).issue.name }}"
+      run: echo "Create issue no. ${{ fromJson(steps.add-project-item.outputs.data).issue.id }} - ${{ fromJson(steps.add-project-item.outputs.data).projectNextItem.issue.name }}"
       
       
