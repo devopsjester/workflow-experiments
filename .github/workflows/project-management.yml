@@ -24,6 +24,7 @@ jobs:
               projectNext(number:3) {
                 id
               }
+            }
           }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
