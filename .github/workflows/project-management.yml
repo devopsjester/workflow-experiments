@@ -30,7 +30,7 @@ jobs:
         
     - name: show repo ID
       run: |
-        echo "Repo node Id: ${{ fromJson(steps.get-repo.outputs.data).repository.id }}
+        echo "Repo node Id: ${{ fromJson(steps.get-repo.outputs.data).repository.id }}"
         
     - name: Create issue in project (beta)
       uses: octokit/graphql-action@v2.x
@@ -48,5 +48,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: display created issue id
-      run: echo "Create issue #${{ fromJson(steps.create-work-item.outputs.data).issue.id }}
+      run: echo "Create issue #${{ fromJson(steps.create-work-item.outputs.data).issue.id }}"
       
