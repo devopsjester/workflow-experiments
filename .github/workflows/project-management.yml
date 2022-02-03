@@ -1,0 +1,30 @@
+# This is a basic workflow to help you get started with Actions
+
+name: project-management
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  create-project-item:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: octokit/graphql-action@v2.x
+      id: create-work-item
+      with:
+        query: |
+          mutation CreateIssueInProject{
+            createIssue(input: { body: "TBD", projectIds: [3], title:"some title" }) {
+              issue {
+                id
+              }
+            }
+          }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - run: echo ${{ steps.create-work-item.outputs.data }}
+
+    - run: echo "Create issue #${{ fromJson(steps.create-work-item.outputs.data).issue.id }}
