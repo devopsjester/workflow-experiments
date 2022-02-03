@@ -49,8 +49,8 @@ jobs:
       run: |
         echo "data: ${{ fromJson(steps.get-repo.outputs.data) }}"
         echo "Repo node Id: ${{ fromJson(steps.get-repo.outputs.data).repository.id }}"
-        echo "Project: ${{ fromJson(steps.get-repo.outputs.data).user.projectNext }}"
-        echo "Project node Id: ${{ fromJson(steps.get-repo.outputs.data).user.projectNext.id }}"
+        echo "Project: ${{ fromJson(steps.get-project.outputs.data).user.projectNext }}"
+        echo "Project node Id: ${{ fromJson(steps.get-project.outputs.data).user.projectNext.id }}"
 
     - name: Create issue in project (beta)
       uses: octokit/graphql-action@v2.x
@@ -58,7 +58,7 @@ jobs:
       with:
         query: |
           mutation CreateIssueInProject{
-            createIssue(input: { body: "TBD", projectIds: [fromJson(steps.get-repo.outputs.data).user.projectNext.id], title:"some title", repositoryId: "${{ fromJson(steps.get-repo.outputs.data).repository.id }}" }) {
+            createIssue(input: { body: "TBD", projectIds: [fromJson(steps.get-project.outputs.data).user.projectNext.id], title:"some title", repositoryId: "${{ fromJson(steps.get-repo.outputs.data).repository.id }}" }) {
               issue {
                 id
               }
