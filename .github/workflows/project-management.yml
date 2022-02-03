@@ -19,15 +19,11 @@ jobs:
           query GetRepositoryNodeId{
             repository(owner:"devopsjester", name:"workflow-experiments") {
               id
-              projects(first:1, search:"new-project") {
-                edges {
-                  node {
-                    id
-                    name
-                  }
-                }
-              }
             }
+            user(login:"devopsjester") {
+              projectNext(number:3) {
+                id
+              }
           }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -36,8 +32,8 @@ jobs:
       run: |
         echo "data: ${{ fromJson(steps.get-repo.outputs.data) }}"
         echo "Repo node Id: ${{ fromJson(steps.get-repo.outputs.data).repository.id }}"
-        echo "Project: ${{ fromJson(steps.get-repo.outputs.data).repository.project }}"
-        echo "Project node Id: ${{ fromJson(steps.get-repo.outputs.data).repository.project.id }}"
+        echo "Project: ${{ fromJson(steps.get-repo.outputs.data).user.projectNext }}"
+        echo "Project node Id: ${{ fromJson(steps.get-repo.outputs.data).user.projectNext.id }}"
 
     - name: Create issue in project (beta)
       uses: octokit/graphql-action@v2.x
@@ -45,7 +41,7 @@ jobs:
       with:
         query: |
           mutation CreateIssueInProject{
-            createIssue(input: { body: "TBD", projectIds: [3], title:"some title", repositoryId: "${{ fromJson(steps.get-repo.outputs.data).repository.id }}" }) {
+            createIssue(input: { body: "TBD", projectIds: [fromJson(steps.get-repo.outputs.data).user.projectNext.id], title:"some title", repositoryId: "${{ fromJson(steps.get-repo.outputs.data).repository.id }}" }) {
               issue {
                 id
               }
