@@ -28,6 +28,21 @@ jobs:
           }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+   
+    - name: Get repository id
+      uses: octokit/graphql-action@v2.x
+      id: get-project
+      with:
+        query: |
+          query GetProjectNodeId{
+            user(login:"devopsjester") {
+              projectNext(number:3) {
+                id
+              }
+            }
+          }
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
     - name: show repo data
       run: |
