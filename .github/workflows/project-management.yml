@@ -4,10 +4,6 @@ name: project-management
 
 # Controls when the workflow will run
 on:
-  push:
-    paths: 
-    - '.gitflow/workflows/project-management.yml'
-    
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -38,7 +34,7 @@ jobs:
       with:
         query: |
           mutation CreateIssueInProject{
-            createIssue(input: { body: "TBD", projectIds: [3], title:"some title" }) {
+            createIssue(input: { body: "TBD", projectIds: [3], title:"some title", repositoryId: "${{ fromJson(steps.get-repo.outputs.data).repository.id }}" }) {
               issue {
                 id
               }
