@@ -63,3 +63,4 @@ jobs:
     - name: display created issue id
       run: echo "Create issue #${{ fromJson(steps.add-project-item.outputs.data).issue.id }}: ${{ fromJson(steps.add-project-item.outputs.data).issue.name }}"
       
+      
