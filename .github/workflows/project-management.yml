@@ -45,13 +45,13 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GRAPH_TOKEN }}
         
-    - name: Create issue
+    - name: Add issue as project item
       uses: octokit/graphql-action@v2.x
       id: add-project-item
       with:
         query: |
           mutation addIssueToProject {
-            addProjectNextItem(input:{projectId:"${{ fromJson(steps.get-repo.outputs.data).user.projectNext.id }}", contentId: "${{ fromJson(steps.create-issue.outputs.data).issue.id }}"}) {
+            addProjectNextItem(input:{projectId:"${{ fromJson(steps.get-repo.outputs.data).user.projectNext.id }}", contentId: "${{ fromJson(steps.create-issue.outputs.data).createIssue.issue.id }}"}) {
               projectNextItem {
                 id
                 title
