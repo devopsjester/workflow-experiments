@@ -22,8 +22,8 @@ jobs:
               }
             }
           }
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - run: echo ${{ steps.create-work-item.outputs.data }}
 
