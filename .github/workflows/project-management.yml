@@ -24,7 +24,12 @@ jobs:
           }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-   
+
+    - name: show token
+      run: |
+        echo "GitHub Token: ${{ secrets.GITHUB_TOKEN }}"
+        echo "Graph Token: ${{ secrets.GRAPH_TOKEN }}"
+    
     - name: Get project id
       uses: octokit/graphql-action@v2.x
       id: get-project
