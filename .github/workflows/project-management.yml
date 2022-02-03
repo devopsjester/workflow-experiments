@@ -11,7 +11,8 @@ jobs:
   create-project-item:
     runs-on: ubuntu-latest
     steps:
-    - uses: octokit/graphql-action@v2.x
+    - name: Get repository id
+      uses: octokit/graphql-action@v2.x
       id: get-repo
       with:
         query: |
@@ -27,7 +28,8 @@ jobs:
       run: |
         echo "Repo node Id: ${{ fromJson(steps.get-repo.outputs.data).repository.id }}
         
-    - uses: octokit/graphql-action@v2.x
+    - name: Create issue in project (beta)
+      uses: octokit/graphql-action@v2.x
       id: create-work-item
       with:
         query: |
@@ -41,6 +43,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - run: echo ${{ steps.create-work-item.outputs.data }}
-
+    - name: display created issue id
     - run: echo "Create issue #${{ fromJson(steps.create-work-item.outputs.data).issue.id }}
