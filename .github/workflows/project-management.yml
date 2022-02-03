@@ -4,6 +4,10 @@ name: project-management
 
 # Controls when the workflow will run
 on:
+  push:
+    paths: 
+    - '.gitflow/workflows/project-management.yml'
+    
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -44,4 +48,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: display created issue id
-    - run: echo "Create issue #${{ fromJson(steps.create-work-item.outputs.data).issue.id }}
+      run: echo "Create issue #${{ fromJson(steps.create-work-item.outputs.data).issue.id }}
+      
