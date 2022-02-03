@@ -10,6 +10,7 @@ on:
 jobs:
   create-project-item:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
     - name: Get repository id
       uses: octokit/graphql-action@v2.x
