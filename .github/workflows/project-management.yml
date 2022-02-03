@@ -16,7 +16,7 @@ jobs:
       with:
         query: |
           query GetRepositoryNodeId{
-            repository(owner:"devopsjester", name:"new-project") {
+            repository(owner:"devopsjester", name:"workflow-experiments") {
               id
             }
           }
