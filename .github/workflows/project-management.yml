@@ -20,8 +20,8 @@ jobs:
             repository(owner:"devopsjester", name:"workflow-experiments") {
               id
               projects(search:"new-project") {
-                edge {
-                  nodes {
+                edges {
+                  node {
                     id
                     name
                   }
