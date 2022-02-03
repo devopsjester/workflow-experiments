@@ -58,7 +58,7 @@ jobs:
       with:
         query: |
           mutation CreateIssueInProject{
-            createIssue(input: { body: "TBD", projectIds: [fromJson(steps.get-project.outputs.data).user.projectNext.id], title:"some title", repositoryId: "${{ fromJson(steps.get-repo.outputs.data).repository.id }}" }) {
+            createIssue(input: { body: "TBD", projectIds: [${{ fromJson(steps.get-project.outputs.data).user.projectNext.id }}], title:"some title", repositoryId: "${{ fromJson(steps.get-repo.outputs.data).repository.id }}" }) {
               issue {
                 id
               }
