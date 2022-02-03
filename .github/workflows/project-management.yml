@@ -20,16 +20,11 @@ jobs:
             repository(owner:"devopsjester", name:"workflow-experiments") {
               id
             }
-            user(login:"devopsjester") {
-              projectNext(number:3) {
-                id
-              }
-            }
           }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
    
-    - name: Get repository id
+    - name: Get project id
       uses: octokit/graphql-action@v2.x
       id: get-project
       with:
