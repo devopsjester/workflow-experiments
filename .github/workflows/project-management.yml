@@ -12,6 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: octokit/graphql-action@v2.x
+      id: get-repo
+      with:
+        query: |
+          query GetRepositoryNodeId{
+            repository(owner:"devopsjester", name:"new-project") {
+
+            }
+          }
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - run: echo ${{steps.get-repo.outputs.data}}
+    - uses: octokit/graphql-action@v2.x
       id: create-work-item
       with:
         query: |
