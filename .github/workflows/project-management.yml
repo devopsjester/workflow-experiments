@@ -19,7 +19,7 @@ jobs:
           query GetRepositoryNodeId{
             repository(owner:"devopsjester", name:"workflow-experiments") {
               id
-              project(3) {
+              project(number:3) {
                 id
               }
             }
