@@ -19,15 +19,19 @@ jobs:
           query GetRepositoryNodeId{
             repository(owner:"devopsjester", name:"workflow-experiments") {
               id
+              project(3) {
+                id
+              }
             }
           }
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
-    - name: show repo ID
+    - name: show repo data
       run: |
         echo "Repo node Id: ${{ fromJson(steps.get-repo.outputs.data).repository.id }}"
-        
+        echo "Project node Id: ${{ fromJson(steps.get-repo.outputs.data).repository.project.id }}"
+
     - name: Create issue in project (beta)
       uses: octokit/graphql-action@v2.x
       id: create-work-item
